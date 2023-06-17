@@ -57,7 +57,7 @@ public class LoginTest extends TestBase {
 
         app.getUser().pause(3000);
         Assert.assertTrue(app.getUser().isElementPresent(By.xpath("//*[text()='Sign Out']")));
-/   }
+  }
 
     @Test
     public void loginNegativeTest() {
