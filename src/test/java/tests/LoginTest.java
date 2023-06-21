@@ -1,5 +1,6 @@
 package tests;
 
+import models.User;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -49,26 +50,28 @@ public class LoginTest extends TestBase {
         String email = "h0hjjkv@ejio.com";
         String password = "dr56ghji$DR";
 
-
+        User user = new User().withEmail(email).withPassword(password);
         app.getUser().openLoginRegistrationForm();
-        app.getUser().fillLoginRegistrationForm(email, password);
+        app.getUser().fillLoginRegistrationForm(user);
 
         app.getUser().submitLogin();
 
         app.getUser().pause(3000);
         Assert.assertTrue(app.getUser().isElementPresent(By.xpath("//*[text()='Sign Out']")));
-  }
+    }
 
     @Test
     public void loginNegativeTest() {
+
         String email = "h0hjjkvejio.com", password = "dr56ghji$DR";
+        User user = new User().withEmail(email).withPassword(password);
         //open login form
         app.getUser().openLoginRegistrationForm();
 //        wd.findElement(By.xpath("//*[text()='LOGIN']")).click();
 //        click(By.xpath("//*[text()='LOGIN']"));
 
         //fill in the form
-        app.getUser().fillLoginRegistrationForm(email, password);
+        app.getUser().fillLoginRegistrationForm(user);
 //        WebElement emailInput = wd.findElement(By.xpath("//input[1]"));
 //        emailInput.click();
 //        emailInput.clear();
@@ -81,8 +84,10 @@ public class LoginTest extends TestBase {
         //click on login button
 //         wd.findElement(By.xpath("//button[1]")).click();
         app.getUser().submitLogin();
+        app.getUser().pause(3000);
         //assert
-
+        Assert.assertTrue(app.getUser().isErrorMessageFormatForLogin());
+        Assert.assertTrue(app.getUser().isAlertPresent());
     }
 
     @AfterMethod

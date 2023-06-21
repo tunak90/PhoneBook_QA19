@@ -1,5 +1,6 @@
 package tests;
 
+import models.User;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -22,10 +23,10 @@ public class RegistrationTest extends TestBase {
         int i = (int) (System.currentTimeMillis() / 1000) % 3600;
         String email = "h0h" + i + "@gmail.com";
         String password = "dr56ghji$DR";
-
+        User user = new User().withEmail(email).withPassword(password);
 
         app.getUser().openLoginRegistrationForm();
-        app.getUser().fillLoginRegistrationForm(email, password);
+        app.getUser().fillLoginRegistrationForm(user);
 
         app.getUser().submitRegistration();
 
@@ -39,10 +40,13 @@ public class RegistrationTest extends TestBase {
         int i = (int) (System.currentTimeMillis() / 1000) % 3600;
         String email = "h0h" + i + "gmail.com";
         String password = "dr56ghji$DR";
-
+        User user = new User().withEmail(email).withPassword(password);
         app.getUser().openLoginRegistrationForm();
-        app.getUser().fillLoginRegistrationForm(email, password);
+        app.getUser().fillLoginRegistrationForm(user);
         app.getUser().submitRegistration();
+        app.getUser().pause(5000);
+        Assert.assertTrue(app.getUser().isErrorMessageFormat());
+        Assert.assertTrue(app.getUser().isAlertPresent());
 
     }
 
@@ -51,10 +55,13 @@ public class RegistrationTest extends TestBase {
         int i = (int) (System.currentTimeMillis() / 1000) % 3600;
         String email = "h0h" + i + "@gmail.com";
         String password = "dr56ghjiDR";
-
+        User user = new User().withEmail(email).withPassword(password);
         app.getUser().openLoginRegistrationForm();
-        app.getUser().fillLoginRegistrationForm(email, password);
+        app.getUser().fillLoginRegistrationForm(user);
         app.getUser().submitRegistration();
+        app.getUser().pause(5000);
+        Assert.assertTrue(app.getUser().isErrorMessageFormat());
+        Assert.assertTrue(app.getUser().isAlertPresent());
     }
 
     @AfterMethod

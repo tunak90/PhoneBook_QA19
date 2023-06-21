@@ -6,8 +6,9 @@ import org.testng.annotations.BeforeSuite;
 
 public class TestBase {
 
- //   WebDriver wd;
- public static ApplicationManager app = new ApplicationManager();
+    //   WebDriver wd;
+    public static ApplicationManager app = new ApplicationManager();
+
     @BeforeSuite
 //    public void init() {
 //
@@ -16,10 +17,9 @@ public class TestBase {
 //
 //        wd.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 //    }
-            public void setUp(){
+    public void setUp() {
         app.init();
     }
-
 
 
     @AfterSuite
@@ -27,7 +27,7 @@ public class TestBase {
 //        wd.quit();
 //
 //    }
-public void stop(){
+    public void stop() {
         app.tearDown();
     }
 //    public void click(By locator) {
