@@ -27,6 +27,7 @@ public class LoginTest extends TestBase {
 
     @Test
     public void loginPositiveTest() {
+        //1
 
 //        //open login form
 //        wd.findElement(By.xpath("//*[text()='LOGIN']")).click();
@@ -47,15 +48,28 @@ public class LoginTest extends TestBase {
 //        pause(3000);
 //        Assert.assertTrue(isElementPresent(By.xpath("//*[text()='Sign Out']")));
 //        //Assert.assertTrue(wd.findElements(By.xpath("//*[text()='Sign Out']")).size() > 0);
-        String email = "h0hjjkv@ejio.com";
-        String password = "dr56ghji$DR";
 
-        User user = new User().withEmail(email).withPassword(password);
+        //2
+//        String email = "h0hjjkv@ejio.com";
+//        String password = "dr56ghji$DR";
+//
+//        User user = new User().withEmail(email).withPassword(password);
+//        app.getUser().openLoginRegistrationForm();
+//        app.getUser().fillLoginRegistrationForm(user);
+//
+//        app.getUser().submitLogin();
+//
+//        app.getUser().pause(3000);
+//        Assert.assertTrue(app.getUser().isElementPresent(By.xpath("//*[text()='Sign Out']")));
+        //3
+        User user = User.builder()
+                .email("h0hjjkv@ejio.com")
+                .password("dr56ghji$DR")
+                .build();
+
         app.getUser().openLoginRegistrationForm();
         app.getUser().fillLoginRegistrationForm(user);
-
         app.getUser().submitLogin();
-
         app.getUser().pause(3000);
         Assert.assertTrue(app.getUser().isElementPresent(By.xpath("//*[text()='Sign Out']")));
     }
@@ -63,29 +77,17 @@ public class LoginTest extends TestBase {
     @Test
     public void loginNegativeTest() {
 
-        String email = "h0hjjkvejio.com", password = "dr56ghji$DR";
-        User user = new User().withEmail(email).withPassword(password);
-        //open login form
+//        String email = "h0hjjkvejio.com", password = "dr56ghji$DR";
+//        User user = new User().withEmail(email).withPassword(password);
+        User user = User.builder()
+                .email("h0hjjkvejio.com")
+                .password("dr56ghji$DR")
+                .build();
+
         app.getUser().openLoginRegistrationForm();
-//        wd.findElement(By.xpath("//*[text()='LOGIN']")).click();
-//        click(By.xpath("//*[text()='LOGIN']"));
-
-        //fill in the form
         app.getUser().fillLoginRegistrationForm(user);
-//        WebElement emailInput = wd.findElement(By.xpath("//input[1]"));
-//        emailInput.click();
-//        emailInput.clear();
-//        emailInput.sendKeys("h0hjjkvejio.com");
-
-//        WebElement passInput = wd.findElement(By.xpath("//input[2]"));
-//        passInput.click();
-//        passInput.clear();
-//        passInput.sendKeys("dr56ghji$DR");
-        //click on login button
-//         wd.findElement(By.xpath("//button[1]")).click();
         app.getUser().submitLogin();
         app.getUser().pause(3000);
-        //assert
         Assert.assertTrue(app.getUser().isErrorMessageFormatForLogin());
         Assert.assertTrue(app.getUser().isAlertPresent());
     }

@@ -21,9 +21,15 @@ public class RegistrationTest extends TestBase {
     @Test
     public void registrationPositiveTest() {
         int i = (int) (System.currentTimeMillis() / 1000) % 3600;
-        String email = "h0h" + i + "@gmail.com";
-        String password = "dr56ghji$DR";
-        User user = new User().withEmail(email).withPassword(password);
+
+//        String email = "h0h" + i + "@gmail.com";
+//        String password = "dr56ghji$DR";
+//        User user = new User().withEmail(email).withPassword(password);
+
+        User user = User.builder()
+                .email("h0h" + i + "@gmail.com")
+                .password("dr56ghji$DR")
+                .build();
 
         app.getUser().openLoginRegistrationForm();
         app.getUser().fillLoginRegistrationForm(user);
@@ -31,6 +37,8 @@ public class RegistrationTest extends TestBase {
         app.getUser().submitRegistration();
 
         app.getUser().pause(3000);
+        logger.info("Registration test starts with data : " + user.getEmail()
+                + " & " + user.getPassword());
         Assert.assertTrue(app.getUser().isElementPresent(By.xpath("//a[@href='/add']")));
     }
 
@@ -38,9 +46,13 @@ public class RegistrationTest extends TestBase {
     public void registrationNegativeTestWrongEmail() {
 
         int i = (int) (System.currentTimeMillis() / 1000) % 3600;
-        String email = "h0h" + i + "gmail.com";
-        String password = "dr56ghji$DR";
-        User user = new User().withEmail(email).withPassword(password);
+//        String email = "h0h" + i + "gmail.com";
+//        String password = "dr56ghji$DR";
+//        User user = new User().withEmail(email).withPassword(password);
+        User user = User.builder()
+                .email("h0h" + i + "gmail.com")
+                .password("dr56ghji$DR")
+                .build();
         app.getUser().openLoginRegistrationForm();
         app.getUser().fillLoginRegistrationForm(user);
         app.getUser().submitRegistration();
@@ -53,9 +65,13 @@ public class RegistrationTest extends TestBase {
     @Test
     public void registrationNegativeTestWrongPassword() {
         int i = (int) (System.currentTimeMillis() / 1000) % 3600;
-        String email = "h0h" + i + "@gmail.com";
-        String password = "dr56ghjiDR";
-        User user = new User().withEmail(email).withPassword(password);
+//        String email = "h0h" + i + "@gmail.com";
+//        String password = "dr56ghjiDR";
+//        User user = new User().withEmail(email).withPassword(password);
+        User user = User.builder()
+                .email("h0h" + i + "@gmail.com")
+                .password("dr56ghjiDR")
+                .build();
         app.getUser().openLoginRegistrationForm();
         app.getUser().fillLoginRegistrationForm(user);
         app.getUser().submitRegistration();
