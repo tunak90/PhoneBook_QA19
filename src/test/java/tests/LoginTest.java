@@ -1,15 +1,18 @@
 package tests;
 
-import models.User;
+import manager.NgListener;
+import models.UserLombok;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(NgListener.class)
 public class LoginTest extends TestBase {
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void precondition() {
         if (app.getUser().isLogged()) {
             app.getUser().logout();
@@ -25,7 +28,7 @@ public class LoginTest extends TestBase {
 //    }
 
 
-    @Test
+    @Test(groups = {"smokeGroup","sanityGroup","regressionGroup"})
     public void loginPositiveTest() {
         //1
 
@@ -62,7 +65,7 @@ public class LoginTest extends TestBase {
 //        app.getUser().pause(3000);
 //        Assert.assertTrue(app.getUser().isElementPresent(By.xpath("//*[text()='Sign Out']")));
         //3
-        User user = User.builder()
+        UserLombok user = UserLombok.builder()
                 .email("h0hjjkv@ejio.com")
                 .password("dr56ghji$DR")
                 .build();
@@ -72,14 +75,29 @@ public class LoginTest extends TestBase {
         app.getUser().submitLogin();
         app.getUser().pause(3000);
         Assert.assertTrue(app.getUser().isElementPresent(By.xpath("//*[text()='Sign Out']")));
+
+
+        app.getUser().logout();
     }
+    @Test(groups = {"smokeGroup","sanityGroup","regressionGroup"})
+    public void loginPositiveTestUserProp() {
+
+        app.getUser().openLoginRegistrationForm();
+        app.getUser().fillLoginRegistrationForm(app.getEmail(),app.getPassword());
+        app.getUser().submitLogin();
+        Assert.assertTrue(app.getUser().isLogged());
+
+
+        app.getUser().logout();
+    }
+
 
     @Test
     public void loginNegativeTest() {
 
 //        String email = "h0hjjkvejio.com", password = "dr56ghji$DR";
 //        User user = new User().withEmail(email).withPassword(password);
-        User user = User.builder()
+        UserLombok user = UserLombok.builder()
                 .email("h0hjjkvejio.com")
                 .password("dr56ghji$DR")
                 .build();
@@ -92,7 +110,7 @@ public class LoginTest extends TestBase {
         Assert.assertTrue(app.getUser().isAlertPresent());
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
 
     public void tearDown() {
 

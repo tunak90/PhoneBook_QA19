@@ -1,6 +1,6 @@
-package maanager;
+package manager;
 
-import models.User;
+import models.UserLombok;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -27,11 +27,12 @@ public class HelperUser extends HelperBase {
         click(By.xpath("//*[text()='LOGIN']"));
     }
 
-    //    public void fillLoginRegistrationForm(String email, String password) {
-//        type(By.xpath("//input[1]"), email);
-//        type(By.xpath("//input[2]"), password);
-//    }
-    public void fillLoginRegistrationForm(User user) {
+    public void fillLoginRegistrationForm(String email, String password) {
+        type(By.xpath("//input[1]"), email);
+        type(By.xpath("//input[2]"), password);
+    }
+
+    public void fillLoginRegistrationForm(UserLombok user) {
         type(By.xpath("//input[1]"), user.getEmail());
         type(By.xpath("//input[2]"), user.getPassword());
     }
@@ -59,11 +60,17 @@ public class HelperUser extends HelperBase {
                 .until(ExpectedConditions.alertIsPresent());
         return alert.getText().contains("Wrong email or password format");
     }
-public boolean isErrorMessageFormatForLogin() {
+
+    public boolean isErrorMessageFormatForLogin() {
         Alert alert = new WebDriverWait(wd, 10)
                 .until(ExpectedConditions.alertIsPresent());
         return alert.getText().contains("Wrong email or password");
     }
 
+    public void login(UserLombok user) {
+        openLoginRegistrationForm();
+        fillLoginRegistrationForm(user);
+        submitLogin();
 
+    }
 }
